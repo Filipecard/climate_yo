@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "id": "picos-pi",
+      "cidade": "Picos",
+      "estado": "Pi"
+    },
+    {
+      "id": "fortaleza-ce",
+      "cidade": "Fortaleza",
+      "estado": "CE"
+    }
+  ]
+}
