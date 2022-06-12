@@ -26,11 +26,13 @@ A ideia base é implementar uma aplicação que relacione duas ou mais matérias
 # Tecnologias utilizadas:
 
  - Flutter
+ 
     Uso da biblioteca [Dio](https://pub.dev/packages/dio) para fazer requisições;
-    
+
     Uso do [node](https://nodejs.org/en/) com banco de dados local;
  
  - Trello
+
     [https:/trello.com/cimateyo.](https://trello.com/b/97IQNLSL/cimateyo)
     
  - GitHub
