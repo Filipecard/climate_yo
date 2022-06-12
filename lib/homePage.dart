@@ -65,13 +65,15 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(10)),
                       child: TextField(
                         controller: cidadeController,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(
+                            color: textColor(),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             border: InputBorder.none,
                             hintStyle:
-                                TextStyle(fontSize: 20.0, color: Colors.white),
+                                TextStyle(fontSize: 20.0, color: textColor()),
                             hintText: 'Cidade:'),
                       ),
                     ),
@@ -87,15 +89,17 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(10)),
                       child: TextField(
                         controller: estadoController,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(
+                            color: textColor(),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                         maxLength: 2,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             border: InputBorder.none,
                             counterText: "",
                             hintStyle:
-                                TextStyle(fontSize: 20.0, color: Colors.white),
+                                TextStyle(fontSize: 20.0, color: textColor()),
                             hintText: 'Estado:'),
                       ),
                     ),
@@ -121,23 +125,26 @@ class _HomePageState extends State<HomePage> {
                   width: 180,
                   padding: const EdgeInsets.all(7),
                   decoration: BoxDecoration(
-                      color: const Color.fromARGB(164, 160, 50, 50),
+                      color: Color.fromARGB(213, 0, 238, 167),
                       borderRadius: BorderRadius.circular(10)),
-                  child: const Text('Buscar',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                  child: Text('Buscar',
+                      style: TextStyle(color: textColor(), fontSize: 20),
                       textAlign: TextAlign.center),
                 ),
               ),
               spaceBetween(),
               const SizedBox(height: 30),
               Container(
-                height: 30,
+                height: 50,
                 color: colorBackGroundInputs(),
                 width: double.infinity,
-                child: const Center(
+                child: Center(
                   child: Text(
                     'Favoritos',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(
+                        color: textColor(),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -167,14 +174,14 @@ class _HomePageState extends State<HomePage> {
                                     favoriteList[index]!['cidade'],
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: colorBackGroundInputs(),
+                                        color: textColor(),
                                         fontSize: 21),
                                   ),
                                   subtitle: Text(
                                     favoriteList[index]!['estado'],
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: colorBackGroundInputs(),
+                                        fontWeight: FontWeight.normal,
+                                        color: textColor(),
                                         fontSize: 21),
                                   ),
                                   leading: const Icon(Icons.search),
@@ -207,10 +214,10 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(15),
                       color: colorBackGroundInputs(),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Selecione sua região",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 21),
+                      style: TextStyle(color: textColor(), fontSize: 21),
                     ),
                   ),
                 ),
@@ -223,7 +230,11 @@ class _HomePageState extends State<HomePage> {
 }
 
 Color colorBackGroundInputs() {
-  return const Color.fromARGB(178, 9, 59, 145);
+  return Color.fromARGB(211, 255, 255, 255);
+}
+
+Color textColor() {
+  return Color.fromARGB(174, 25, 17, 68);
 }
 
 SizedBox spaceBetween() {
