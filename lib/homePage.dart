@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:climate_request/resquests/request_database.dart';
 import 'package:flutter/material.dart';
 import 'climateResponse/climateSearch.dart';
 import 'dropDownSearch/dropDownSearch.dart';
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<List> fetchData() async {
-    var response = await Dio().get('http://localhost:3000/data');
+    var response = await RequestDataBase().getData();
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load favoritos');
@@ -41,8 +41,7 @@ class _HomePageState extends State<HomePage> {
       constraints: const BoxConstraints.expand(),
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('images/backgroundImage.jfif'),
-              fit: BoxFit.cover)),
+              image: AssetImage('images/sky_image.jpg'), fit: BoxFit.cover)),
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -189,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                         } else if (json.hasError) {
                           return Text("${json.error}");
                         }
-                        return const CircularProgressIndicator();
+                        return const Center(child: CircularProgressIndicator());
                       })),
               spaceBetween(),
               Flexible(

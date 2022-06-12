@@ -54,12 +54,14 @@ class _ClimateSearchState extends State<ClimateSearch> {
 
   void _addToFavorite(String cidade, String estado) async {
     if (!isFavorite) {
-      final favoriteResp =
-          await Dio().post('http://localhost:3000/data', data: {
-        "id": "${cidade.toLowerCase()}-${estado.toLowerCase()}",
-        "cidade": cidade,
-        "estado": estado
-      });
+      final favoriteResp = await Dio().post(
+        'http://localhost:3000/data',
+        data: {
+          "id": "${cidade.toLowerCase()}-${estado.toLowerCase()}",
+          "cidade": cidade,
+          "estado": estado
+        },
+      );
       setState(() {
         isFavorite = true;
       });
@@ -78,8 +80,7 @@ class _ClimateSearchState extends State<ClimateSearch> {
       constraints: const BoxConstraints.expand(),
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('images/backgroundImage.jfif'),
-              fit: BoxFit.cover)),
+              image: AssetImage('images/sky_image.jpg'), fit: BoxFit.cover)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
