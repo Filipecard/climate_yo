@@ -1,16 +1,38 @@
-# climate_request
+### Cimate Yo
 
-A new Flutter project.
+Um projeto Flutter criado para matéria Projeto Integrador do curso de Análise e Desenvolvimento de Sistemas(ADS), no Instituto Federal do Piauí(IFPI).
+A ideia base é implementar uma aplicação que relacione duas ou mais matérias do curso, gerando uma integração de conhecimentos.
 
-## Getting Started
+# Equipe:
 
-This project is a starting point for a Flutter application.
+    - Filipe 
+    - Kauê
+    - Cícero
+    - Emanuel
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Matérias relacionadas: 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Programação para dispositivos móveis (PDM)
+- Engenharia de Software IV (ES - IV)
+- Projeto Integrador
+
+# Descrição do Projeto:
+
+**Tema:** Clima
+**Descrição:** A ideia para o projeto se resume em fazer requisições para duas API's, uma do IBGE que traz dados de cidades e estados, e a outra do site HG brasil weather para buscar dados climáticos das regiões.
+
+# Tecnologias utilizadas:
+
+ - Flutter
+    
+    Uso da biblioteca [Dio](https://pub.dev/packages/dio) para fazer requisições;
+    Uso do [node](https://nodejs.org/en/) com banco de dados local;
+ 
+ - Trello
+    
+    [https:/trello.com/cimateyo.](https://trello.com/b/97IQNLSL/cimateyo)
+    
+ - GitHub
+ - VS Code
+
