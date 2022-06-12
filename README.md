@@ -5,10 +5,10 @@ A ideia base é implementar uma aplicação que relacione duas ou mais matérias
 
 # Equipe:
 
-    - Filipe 
-    - Kauê
-    - Cícero
-    - Emanuel
+ - [Filipe Cardoso](https://github.com/Filipecard) 
+ - [Kauê Cavalcante](https://github.com/kauecdev)
+ - [Cícero Henrique](https://github.com/cicerohss)
+ - [Emanuel Souza](https://github.com/Emanuelvss13)
 
 
 # Matérias relacionadas: 
@@ -26,7 +26,7 @@ A ideia base é implementar uma aplicação que relacione duas ou mais matérias
 # Tecnologias utilizadas:
 
  - Flutter
- 
+
     Uso da biblioteca [Dio](https://pub.dev/packages/dio) para fazer requisições;
 
     Uso do [node](https://nodejs.org/en/) com banco de dados local;
