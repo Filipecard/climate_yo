@@ -1,6 +1,7 @@
-import 'package:climate_request/resquests/request_database.dart';
+import 'package:climate_request/styles/formatWidgets.dart';
 import 'package:flutter/material.dart';
 import 'climateResponse/climateSearch.dart';
+import 'controller/resquests/request_database.dart';
 import 'dropDownSearch/dropDownSearch.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,6 +36,10 @@ class _HomePageState extends State<HomePage> {
     return favoriteList;
   }
 
+  bool controllersNotEmpty() {
+    return cidadeController.text.isNotEmpty && estadoController.text.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,200 +48,139 @@ class _HomePageState extends State<HomePage> {
           image: DecorationImage(
               image: AssetImage('images/sky_image.jpg'), fit: BoxFit.cover)),
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: const Text('YoClimate'),
-            automaticallyImplyLeading: false,
-          ),
-          body: ListView(
-            scrollDirection: Axis.vertical,
-            children: [
-              spaceBetween(),
-              Row(
-                children: [
-                  const SizedBox(width: 2),
-                  Flexible(
-                    flex: 6,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                          color: colorBackGroundInputs(),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextField(
-                        controller: cidadeController,
-                        style: TextStyle(
-                            color: textColor(),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle:
-                                TextStyle(fontSize: 20.0, color: textColor()),
-                            hintText: 'Cidade:'),
-                      ),
-                    ),
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text('YoClimate'),
+          automaticallyImplyLeading: false,
+        ),
+        body: ListView(
+          scrollDirection: Axis.vertical,
+          children: [
+            spaceBetween,
+            Row(
+              children: [
+                const SizedBox(width: 2),
+                Flexible(
+                  flex: 6,
+                  child: baseStyle.inputContainer(
+                    baseStyle.inputTextField(cidadeController, 'Cidade'),
                   ),
-                  const SizedBox(width: 2),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                          color: colorBackGroundInputs(),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextField(
-                        controller: estadoController,
-                        style: TextStyle(
-                            color: textColor(),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                        maxLength: 2,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            counterText: "",
-                            hintStyle:
-                                TextStyle(fontSize: 20.0, color: textColor()),
-                            hintText: 'Estado:'),
-                      ),
-                    ),
+                ),
+                const SizedBox(width: 2),
+                Flexible(
+                  flex: 1,
+                  child: baseStyle.inputContainer(
+                    baseStyle.inputTextField(estadoController, 'Estado'),
                   ),
-                  const SizedBox(width: 2),
-                ],
+                ),
+                const SizedBox(width: 2),
+              ],
+            ),
+            spaceBetween,
+            TextButton(
+              onPressed: () {
+                if (controllersNotEmpty()) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ClimateSearch(
+                            cidade: cidadeController.text,
+                            estado: estadoController.text),
+                      ));
+                }
+              },
+              child: Container(
+                width: 180,
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(213, 0, 238, 167),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Text('Buscar',
+                    style: baseTextStyle, textAlign: TextAlign.center),
               ),
-              spaceBetween(),
-              TextButton(
-                onPressed: () {
-                  if (cidadeController.text.isNotEmpty &&
-                      estadoController.text.isNotEmpty) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ClimateSearch(
-                              cidade: cidadeController.text,
-                              estado: estadoController.text),
-                        ));
+            ),
+            spaceBetween,
+            const SizedBox(height: 30),
+            Container(
+              height: 50,
+              color: baseStyle.colorBackGroundInputs,
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  'Favoritos',
+                  style: baseStyle.textStyleBase(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Container(
+              height: 400,
+              width: double.infinity,
+              color: Colors.white54,
+              child: FutureBuilder<List>(
+                future: fetchData(),
+                builder: (context, json) {
+                  if (json.hasData) {
+                    return ListView.separated(
+                      scrollDirection: Axis.vertical,
+                      itemCount: favoriteList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String cityName = favoriteList[index]!['cidade'];
+                        String stateName = favoriteList[index]!['cidade'];
+                        return TextButton(
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ClimateSearch(
+                                  cidade: cityName, estado: stateName),
+                            ),
+                          ),
+                          child: ListTile(
+                            title: Text(cityName, style: textStyleNormalFont),
+                            subtitle:
+                                Text(stateName, style: textStyleNormalFont),
+                            leading: const Icon(Icons.search),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                    );
+                  } else if (json.hasError) {
+                    return Text("${json.error}");
                   }
+                  return const Center(child: CircularProgressIndicator());
                 },
-                child: Container(
-                  width: 180,
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(213, 0, 238, 167),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text('Buscar',
-                      style: TextStyle(color: textColor(), fontSize: 20),
-                      textAlign: TextAlign.center),
-                ),
               ),
-              spaceBetween(),
-              const SizedBox(height: 30),
-              Container(
-                height: 50,
-                color: colorBackGroundInputs(),
-                width: double.infinity,
-                child: Center(
-                  child: Text(
-                    'Favoritos',
-                    style: TextStyle(
-                        color: textColor(),
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
+            ),
+            spaceBetween,
+            Flexible(
+              child: TextButton(
+                onPressed: (() => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DropDownSearch(),
+                      ),
+                    )),
+                child: baseStyle.inputContainer(
+                  Text(
+                    "Selecione sua região",
+                    textAlign: TextAlign.center,
+                    style: baseTextStyle,
                   ),
+                  paddingValue: 10,
                 ),
               ),
-              Container(
-                  height: 400,
-                  width: double.infinity,
-                  color: Colors.white54,
-                  child: FutureBuilder<List>(
-                      future: fetchData(),
-                      builder: (context, json) {
-                        if (json.hasData) {
-                          return ListView.separated(
-                            scrollDirection: Axis.vertical,
-                            itemCount: favoriteList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return TextButton(
-                                onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ClimateSearch(
-                                        cidade: favoriteList[index]!['cidade'],
-                                        estado: favoriteList[index]!['estado']),
-                                  ),
-                                ),
-                                child: ListTile(
-                                  title: Text(
-                                    favoriteList[index]!['cidade'],
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: textColor(),
-                                        fontSize: 21),
-                                  ),
-                                  subtitle: Text(
-                                    favoriteList[index]!['estado'],
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        color: textColor(),
-                                        fontSize: 21),
-                                  ),
-                                  leading: const Icon(Icons.search),
-                                ),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) =>
-                                    const Divider(),
-                          );
-                        } else if (json.hasError) {
-                          return Text("${json.error}");
-                        }
-                        return const Center(child: CircularProgressIndicator());
-                      })),
-              spaceBetween(),
-              Flexible(
-                child: TextButton(
-                  onPressed: (() => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const DropDownSearch(),
-                        ),
-                      )),
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: colorBackGroundInputs(),
-                    ),
-                    child: Text(
-                      "Selecione sua região",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: textColor(), fontSize: 21),
-                    ),
-                  ),
-                ),
-              ),
-              spaceBetween(),
-            ],
-          )),
+            ),
+            spaceBetween,
+          ],
+        ),
+      ),
     );
   }
 }
 
-Color colorBackGroundInputs() {
-  return Color.fromARGB(211, 255, 255, 255);
-}
-
-Color textColor() {
-  return Color.fromARGB(174, 25, 17, 68);
-}
-
-SizedBox spaceBetween() {
-  return const SizedBox(height: 20);
-}
+FormatWidgets baseStyle = FormatWidgets();
+var spaceBetween = baseStyle.spaceBetween();
+var baseTextStyle = baseStyle.textStyleBase();
+var textStyleNormalFont =
+    baseStyle.textStyleBase(fontWeight: FontWeight.normal);

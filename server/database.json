@@ -9,6 +9,11 @@
       "id": "fortaleza-ce",
       "cidade": "Fortaleza",
       "estado": "CE"
+    },
+    {
+      "id": "teresina-pi",
+      "cidade": "Teresina",
+      "estado": "Pi"
     }
   ]
 }
