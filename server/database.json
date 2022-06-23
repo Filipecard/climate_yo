@@ -14,6 +14,21 @@
       "id": "teresina-pi",
       "cidade": "Teresina",
       "estado": "Pi"
+    },
+    {
+      "id": "alta floresta d'oeste-ro",
+      "cidade": "Alta Floresta D'Oeste",
+      "estado": "RO"
+    },
+    {
+      "id": "teresina-teresina",
+      "cidade": "Teresina",
+      "estado": "Teresina"
+    },
+    {
+      "id": "picos-picos",
+      "cidade": "Picos",
+      "estado": "Picos"
     }
   ]
 }

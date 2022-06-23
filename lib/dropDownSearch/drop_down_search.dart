@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:http/http.dart' as http;
-import '../climateResponse/climateSearch.dart';
+import '../climateResponse/climate_search.dart';
 import 'cidade.dart';
 import 'estado.dart';
 
