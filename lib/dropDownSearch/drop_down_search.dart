@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:climate_request/data/cidade.dart';
-import 'package:climate_request/data/estado.dart';
+import 'package:climate_request/data/model/cidade.dart';
+import 'package:climate_request/data/model/estado.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:http/http.dart' as http;
