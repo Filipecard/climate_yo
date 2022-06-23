@@ -1,10 +1,9 @@
 import 'dart:convert';
+import 'package:climate_request/data/climate.dart';
 import 'package:climate_request/home_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'climate.dart';
 
 class ClimateSearch extends StatefulWidget {
   const ClimateSearch({Key? key, required this.cidade, required this.estado})
@@ -221,7 +220,7 @@ class _ClimateSearchState extends State<ClimateSearch> {
                           child: Icon(Icons.star,
                               color: isFavorite
                                   ? Colors.amber
-                                  : Color.fromARGB(92, 75, 75, 75),
+                                  : const Color.fromARGB(92, 75, 75, 75),
                               size: 30),
                         ),
                       ),
