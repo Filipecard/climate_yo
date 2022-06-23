@@ -1,8 +1,8 @@
 import 'package:climate_request/styles/format_widgets.dart';
 import 'package:flutter/material.dart';
-import 'climateResponse/climate_search.dart';
-import 'controller/resquests/request_database.dart';
-import 'dropDownSearch/drop_down_search.dart';
+import 'climate_search.dart';
+import '../../controller/resquests/request_database.dart';
+import 'drop_down_search.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

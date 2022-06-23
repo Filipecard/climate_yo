@@ -5,7 +5,7 @@ import 'package:climate_request/data/model/estado.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:http/http.dart' as http;
-import '../climateResponse/climate_search.dart';
+import 'climate_search.dart';
 
 class DropDownSearch extends StatefulWidget {
   const DropDownSearch({Key? key}) : super(key: key);
