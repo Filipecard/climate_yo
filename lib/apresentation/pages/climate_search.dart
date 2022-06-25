@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:climate_request/data/climate.dart';
 import 'package:climate_request/apresentation/pages/home_page.dart';
+import 'package:climate_request/data/model/climate.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -26,7 +26,7 @@ class _ClimateSearchState extends State<ClimateSearch> {
   // como é uma amostra grátis, essa chave possui limite de requisições diárias, contudo há
   // pacotes pagos no site para ampliar suas requisições.
   final String _baseUrl =
-      'https://api.hgbrasil.com/weather?key=48dab000&city_name';
+      'https://api.hgbrasil.com/weather?key=9e3472d6&city_name';
 
   Future<Climate> fetch() async {
     final response = await http
@@ -35,18 +35,28 @@ class _ClimateSearchState extends State<ClimateSearch> {
       throw Exception('Failed to load comments');
     }
 
-    final favoriteResp = await Dio().get('http://localhost:3000/data');
-    List listCitys = favoriteResp.data;
+    try {
+      final isFavorited = await Dio().get(
+          'http://localhost:3000/data/${widget.cidade.toLowerCase()}-${widget.estado.toLowerCase()}');
 
-    for (var i = 0; i < listCitys.length; i++) {
-      if (listCitys[i]['cidade'].toString().toLowerCase() ==
-              widget.cidade.toLowerCase() &&
-          listCitys[i]['estado'].toString().toLowerCase() ==
-              widget.estado.toLowerCase()) {
-        isFavorite = true;
-        break;
+      if (isFavorited.statusCode == 200) {
+        setState(() {
+          isFavorite = true;
+        });
       }
+    } catch (e) {
+      isFavorite = false;
     }
+
+    // for (var i = 0; i < listCitys.length; i++) {
+    //   if (listCitys[i]['cidade'].toString().toLowerCase() ==
+    //           widget.cidade.toLowerCase() &&
+    //       listCitys[i]['estado'].toString().toLowerCase() ==
+    //           widget.estado.toLowerCase()) {
+    //     isFavorite = true;
+    //     break;
+    //   }
+    // }
 
     return Climate.fromJson(jsonDecode(response.body));
   }

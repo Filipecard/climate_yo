@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                       itemCount: favoriteList.length,
                       itemBuilder: (BuildContext context, int index) {
                         String cityName = favoriteList[index]!['cidade'];
-                        String stateName = favoriteList[index]!['cidade'];
+                        String stateName = favoriteList[index]!['estado'];
                         return TextButton(
                           onPressed: () => Navigator.push(
                             context,
