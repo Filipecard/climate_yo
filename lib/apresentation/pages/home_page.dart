@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'package:climate_request/data/model/estado.dart';
 import 'package:climate_request/styles/format_widgets.dart';
 import 'package:flutter/material.dart';
 import 'climate_search.dart';
 import '../../controller/resquests/request_database.dart';
 import 'drop_down_search.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List favoriteList = [];
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController cidadeController = TextEditingController();
   TextEditingController estadoController = TextEditingController();
 
@@ -36,8 +40,50 @@ class _HomePageState extends State<HomePage> {
     return favoriteList;
   }
 
-  bool controllersNotEmpty() {
-    return cidadeController.text.isNotEmpty && estadoController.text.isNotEmpty;
+  Future<bool> controllersNotEmpty(context) async {
+    if (cidadeController.text.isEmpty || estadoController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Preencha todos os campos!'),
+      ));
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> validateSearch(context) async {
+    final stateResponse = await http.get(Uri.parse(
+        'https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoController.text}'));
+
+    final cityResponse = await http.get(Uri.parse(
+        'https://servicodados.ibge.gov.br/api/v1/localidades/municipios/${cidadeController.text}'));
+
+    if (json.decode(stateResponse.body).isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Não foi possivel localizar esse estado!'),
+      ));
+      return false;
+    }
+
+    if (json.decode(cityResponse.body).isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Não foi possivel localizar essa cidade!'),
+      ));
+      return false;
+    }
+
+    final cityStateId = jsonDecode(cityResponse.body)['microrregiao']
+        ['mesorregiao']['UF']['id'];
+
+    final state = Estado.fromJson(jsonDecode(stateResponse.body));
+
+    if (cityStateId != state.id) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Essa cidade não pertence a esse estado!'),
+      ));
+      return false;
+    }
+
+    return true;
   }
 
   @override
@@ -78,9 +124,10 @@ class _HomePageState extends State<HomePage> {
             ),
             spaceBetween,
             TextButton(
-              onPressed: () {
-                if (controllersNotEmpty()) {
-                  Navigator.push(
+              onPressed: () async {
+                if (await controllersNotEmpty(context) &&
+                    await validateSearch(context)) {
+                  await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ClimateSearch(

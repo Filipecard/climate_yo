@@ -26,7 +26,7 @@ class _ClimateSearchState extends State<ClimateSearch> {
   // como é uma amostra grátis, essa chave possui limite de requisições diárias, contudo há
   // pacotes pagos no site para ampliar suas requisições.
   final String _baseUrl =
-      'https://api.hgbrasil.com/weather?key=9e3472d6&city_name';
+      'https://api.hgbrasil.com/weather?key=c22e924f&city_name';
 
   Future<Climate> fetch() async {
     final response = await http
